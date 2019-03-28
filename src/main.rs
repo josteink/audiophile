@@ -5,8 +5,17 @@ extern crate claxon;
 extern crate hound;
 
 struct MediaInfo {
+    format: String,
     depth: u32,
     rate: u32
+}
+
+impl std::fmt::Display for MediaInfo {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        let _rate = (self.rate as f32)/1000.0;
+
+        write!(f, "{} - {}-bit, {}kHz)", self.format, self.depth, _rate)
+    }
 }
 
 fn main() {
@@ -23,7 +32,7 @@ fn main() {
                 None => (),
                 Some(info) => {
                     if is_audiophile_grade_audio(&info) {
-                        println!("{} ({} - {}Hz)", path.display(), info.depth, info.rate);
+                        println!("{} ({})", path.display(), info);
                     }
                 }
             }
@@ -54,6 +63,7 @@ fn get_media_info_for_flac(path: &std::path::Path) -> MediaInfo {
     let metadata = reader.streaminfo();
 
     MediaInfo {
+        format: "Flac".to_string(),
         depth: metadata.bits_per_sample,
         rate: metadata.sample_rate
     }
@@ -67,6 +77,7 @@ fn get_media_info_for_wav(path: &std::path::Path) -> Option<MediaInfo> {
             let metadata = reader.spec();
 
             Some(MediaInfo {
+                format: "Wav".to_string(),
                 depth: metadata.bits_per_sample as u32,
                 rate: metadata.sample_rate
             })
