@@ -1,5 +1,3 @@
-//use std::fs;
-use std::env;
 
 extern crate claxon;
 extern crate hound;
@@ -41,6 +39,7 @@ fn main() {
 }
 
 fn get_root_dir() -> std::string::String {
+    use std::env;
     let args: Vec<String> = env::args().collect();
     // println!("{:?}", args);
 
