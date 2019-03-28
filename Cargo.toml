@@ -1,5 +1,5 @@
 [package]
-name = "rusty-flacs"
+name = "audiophile"
 version = "0.1.0"
 authors = ["jostein"]
 edition = "2018"
@@ -7,3 +7,4 @@ edition = "2018"
 [dependencies]
 glob = "0.3.0"
 claxon = "0.4.1"
+hound = "3.4.0"

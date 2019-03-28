@@ -2,6 +2,7 @@
 use std::env;
 
 extern crate claxon;
+extern crate hound;
 
 struct MediaInfo {
     depth: u32,
@@ -10,7 +11,7 @@ struct MediaInfo {
 
 fn main() {
     let root_dir = get_root_dir();
-    let mask = format!("{}/**/*.flac", root_dir);
+    let mask = format!("{}/**/*.*", root_dir);
     let files = glob::glob(&mask).expect("Error listing files!");
 
     for item in files {
@@ -41,20 +42,37 @@ fn get_root_dir() -> std::string::String {
 fn get_media_info_for(path: &std::path::Path) -> Option<MediaInfo> {
     let ext = path.extension().unwrap_or_default().to_str().unwrap();
 
-    match ext {
-        "flac" => get_media_info_for_flac(path),
+    match ext.to_lowercase().as_str() {
+        "flac" => Some(get_media_info_for_flac(path)),
+        "wav" => get_media_info_for_wav(path),
         _ => None
     }
 }
 
-fn get_media_info_for_flac(path: &std::path::Path) -> Option<MediaInfo> {
+fn get_media_info_for_flac(path: &std::path::Path) -> MediaInfo {
     let reader = claxon::FlacReader::open(path).unwrap();
     let metadata = reader.streaminfo();
 
-    Some(MediaInfo {
+    MediaInfo {
         depth: metadata.bits_per_sample,
         rate: metadata.sample_rate
-    })
+    }
+}
+
+fn get_media_info_for_wav(path: &std::path::Path) -> Option<MediaInfo> {
+    let result = hound::WavReader::open(path);
+
+    match result {
+        Ok(reader) => {
+            let metadata = reader.spec();
+
+            Some(MediaInfo {
+                depth: metadata.bits_per_sample as u32,
+                rate: metadata.sample_rate
+            })
+        },
+        _ => None
+    }
 }
 
 fn is_audiophile_grade_audio(media_info: &MediaInfo) -> bool {
