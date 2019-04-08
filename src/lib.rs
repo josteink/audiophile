@@ -11,7 +11,7 @@ pub struct MediaInfo {
 
 impl MediaInfo {
     pub fn is_audiophile_grade_audio(&self) -> bool {
-        self.depth > 16 || self.rate > 44100
+        (self.depth >= 16 && self.rate >= 44100) && (self.depth > 16 || self.rate > 44100)
     }
 
     pub fn from_path(path: &Path) -> Option<MediaInfo> {

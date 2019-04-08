@@ -19,6 +19,16 @@ mod tests {
         test_audio(true, 16, 48000);
     }
 
+    #[test]
+    fn bit8_quality_is_never_audiophile() {
+        test_audio(false, 8, 192000);
+    }
+
+    #[test]
+    fn rate22_quality_is_never_audiophile() {
+        test_audio(false, 24, 22050);
+    }
+
     fn test_audio(is_audiophile: bool, depth: u32, rate: u32) {
         let testee = MediaInfo {
             format: "test".to_string(),
