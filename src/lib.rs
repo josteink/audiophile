@@ -4,9 +4,9 @@ extern crate hound;
 use std::path::Path;
 
 pub struct MediaInfo {
-    format: String,
-    depth: u32,
-    rate: u32,
+    pub format: String,
+    pub depth: u32,
+    pub rate: u32,
 }
 
 impl MediaInfo {
