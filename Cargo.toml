@@ -4,6 +4,10 @@ version = "0.1.0"
 authors = ["jostein"]
 edition = "2018"
 
+[lib]
+name = "audiophile"
+path = "src/lib.rs"
+
 [dependencies]
 glob = "0.3.0"
 claxon = "0.4.1"
