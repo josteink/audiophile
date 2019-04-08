@@ -1,4 +1,3 @@
-
 extern crate claxon;
 extern crate hound;
 
@@ -7,7 +6,7 @@ use std::path::Path;
 struct MediaInfo {
     format: String,
     depth: u32,
-    rate: u32
+    rate: u32,
 }
 
 impl MediaInfo {
@@ -21,7 +20,7 @@ impl MediaInfo {
         match ext.to_lowercase().as_str() {
             "flac" => Some(MediaInfo::from_flac(path)),
             "wav" => MediaInfo::from_wav(path),
-            _ => None
+            _ => None,
         }
     }
 
@@ -32,7 +31,7 @@ impl MediaInfo {
         MediaInfo {
             format: "Flac".to_string(),
             depth: metadata.bits_per_sample,
-            rate: metadata.sample_rate
+            rate: metadata.sample_rate,
         }
     }
 
@@ -46,17 +45,17 @@ impl MediaInfo {
                 Some(MediaInfo {
                     format: "Wav".to_string(),
                     depth: metadata.bits_per_sample as u32,
-                    rate: metadata.sample_rate
+                    rate: metadata.sample_rate,
                 })
-            },
-            _ => None
+            }
+            _ => None,
         }
     }
 }
 
 impl std::fmt::Display for MediaInfo {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-        let _rate = (self.rate as f32)/1000.0;
+        let _rate = (self.rate as f32) / 1000.0;
 
         write!(f, "{} - {}-bit, {}kHz", self.format, self.depth, _rate)
     }
