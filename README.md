@@ -1,4 +1,6 @@
 
+[![Build Status](https://jostein.visualstudio.com/audiophile/_apis/build/status/josteink.audiophile?branchName=master)](https://jostein.visualstudio.com/audiophile/_build/latest?definitionId=1&branchName=master)
+
 # audiophile
 
 A [Rust](https://www.rust-lang.org/)-based, self-contained tool which analyzes your audio-collection
