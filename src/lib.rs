@@ -1,5 +1,6 @@
 extern crate claxon;
 extern crate hound;
+extern crate alac;
 
 use std::path::Path;
 
@@ -20,6 +21,8 @@ impl MediaInfo {
         match ext.to_lowercase().as_str() {
             "flac" => Some(MediaInfo::from_flac(path)),
             "wav" => MediaInfo::from_wav(path),
+            "m4a" => MediaInfo::from_alac(path),
+            "alac" => MediaInfo::from_alac(path),
             _ => None,
         }
     }
@@ -50,6 +53,26 @@ impl MediaInfo {
             }
             _ => None,
         }
+    }
+
+    fn from_alac(path: &Path) -> Option<MediaInfo> {
+        use std::fs::File;
+
+        let file = File::open(path).expect("Error opening file!");
+        let result = alac::Reader::new(&file);
+        match result {
+            Ok(r) => {
+                let stream_info = r.stream_info();
+
+                Some(MediaInfo {
+                    format: "Alac".to_string(),
+                    depth: stream_info.bit_depth() as u32,
+                    rate: stream_info.sample_rate(),
+                })
+            },
+            _ => None
+        }
+
     }
 }
 

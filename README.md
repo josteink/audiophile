@@ -6,7 +6,7 @@
 A [Rust](https://www.rust-lang.org/)-based, self-contained tool which analyzes your audio-collection
 and identifies extra high-fidelity audio-files (>16 bit, >44.1kHz).
 
-Currently supports analysis of FLAC and WAV files.
+Currently supports analysis of FLAC, WAV and ALAC files.
 
 ## building
 
