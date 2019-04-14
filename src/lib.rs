@@ -1,6 +1,6 @@
+extern crate alac;
 extern crate claxon;
 extern crate hound;
-extern crate alac;
 
 use std::path::Path;
 
@@ -69,10 +69,9 @@ impl MediaInfo {
                     depth: stream_info.bit_depth() as u32,
                     rate: stream_info.sample_rate(),
                 })
-            },
-            _ => None
+            }
+            _ => None,
         }
-
     }
 }
 
