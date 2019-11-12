@@ -19,7 +19,7 @@ impl MediaInfo {
         let ext = path.extension().unwrap_or_default().to_str().unwrap();
 
         match ext.to_lowercase().as_str() {
-            "flac" => Some(MediaInfo::from_flac(path)),
+            "flac" => MediaInfo::from_flac(path),
             "wav" => MediaInfo::from_wav(path),
             "m4a" => MediaInfo::from_alac(path),
             "alac" => MediaInfo::from_alac(path),
@@ -27,14 +27,20 @@ impl MediaInfo {
         }
     }
 
-    fn from_flac(path: &Path) -> MediaInfo {
-        let reader = claxon::FlacReader::open(path).unwrap();
-        let metadata = reader.streaminfo();
+    fn from_flac(path: &Path) -> Option<MediaInfo> {
+        let result = claxon::FlacReader::open(path);
 
-        MediaInfo {
-            format: "Flac".to_string(),
-            depth: metadata.bits_per_sample,
-            rate: metadata.sample_rate,
+        match result {
+            Ok(reader) => {
+                let metadata = reader.streaminfo();
+
+                Some(MediaInfo {
+                    format: "Flac".to_string(),
+                    depth: metadata.bits_per_sample,
+                    rate: metadata.sample_rate,
+                })
+            }
+            _ => None,
         }
     }
 
