@@ -1,5 +1,4 @@
-
-[![Build Status](https://jostein.visualstudio.com/audiophile/_apis/build/status/josteink.audiophile?branchName=master)](https://jostein.visualstudio.com/audiophile/_build/latest?definitionId=1&branchName=master)
+![Rust](https://github.com/josteink/audiophile/workflows/Rust/badge.svg)
 
 # audiophile
 
