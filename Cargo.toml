@@ -11,5 +11,5 @@ path = "src/lib.rs"
 [dependencies]
 glob = "0.3.0"
 claxon = "0.4.3"
-hound = "3.4.0"
+hound = "3.5.0"
 alac = "0.5.0"
