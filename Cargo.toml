@@ -9,7 +9,7 @@ name = "audiophile"
 path = "src/lib.rs"
 
 [dependencies]
-glob = "0.3.0"
+glob = "0.3.1"
 claxon = "0.4.3"
 hound = "3.5.0"
 alac = "0.5.0"
