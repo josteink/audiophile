@@ -18,16 +18,15 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+    - uses: taiki-e/install-action@nextest
     - name: Build
       run: cargo build --verbose
-    - name: Install test-deps
-      run: cargo install cargo2junit
     - name: Run tests
-      run: cargo test -- -Z unstable-options --format json | cargo2junit > results.xml
+      run: cargo nextest run --profile ci
     - name: Publish Unit Test Results
       uses: EnricoMi/publish-unit-test-result-action@v2
       if: always()
       with:
-        files: results.xml
+        files: target/nextest/ci/results.xml
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
